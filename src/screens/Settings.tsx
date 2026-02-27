@@ -4,8 +4,53 @@ import { useTheme } from '../hooks/useTheme';
 import { exportData, importData, resetAllData } from '../utils/dataExport';
 import { APP_VERSION } from '../utils/constants';
 import ConfirmModal from '../components/ConfirmModal';
-import { Download, Upload, Trash2, Check, AlertCircle } from 'lucide-react';
+import { Download, Upload, Trash2, Check, AlertCircle, Minus, Plus } from 'lucide-react';
 import type { ThemeMode } from '../types';
+
+function NumberStepper({
+  id,
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  id: string;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (v: number) => void;
+}) {
+  const clamp = (v: number) => Math.max(min, Math.min(max, v));
+
+  return (
+    <div className="flex items-center gap-0">
+      <button
+        type="button"
+        aria-label="Diminuer"
+        onClick={() => onChange(clamp(value - 1))}
+        disabled={value <= min}
+        className="flex items-center justify-center w-8 h-8 rounded-l-lg border border-border bg-surface-alt text-foreground transition-colors hover:bg-accent/10 active:bg-accent/20 disabled:opacity-30 disabled:pointer-events-none"
+      >
+        <Minus size={14} />
+      </button>
+      <span
+        id={id}
+        className="flex items-center justify-center w-10 h-8 text-sm font-semibold text-foreground bg-background border-y border-border select-none"
+      >
+        {value}
+      </span>
+      <button
+        type="button"
+        aria-label="Augmenter"
+        onClick={() => onChange(clamp(value + 1))}
+        disabled={value >= max}
+        className="flex items-center justify-center w-8 h-8 rounded-r-lg border border-border bg-surface-alt text-foreground transition-colors hover:bg-accent/10 active:bg-accent/20 disabled:opacity-30 disabled:pointer-events-none"
+      >
+        <Plus size={14} />
+      </button>
+    </div>
+  );
+}
 
 export default function Settings() {
   const { cycleLength, periodLength, setSetting } = useSettings();
@@ -54,15 +99,13 @@ export default function Settings() {
 
         <div className="flex items-center justify-between">
           <label htmlFor="cycleLen" className="text-sm text-muted">Durée moyenne du cycle</label>
-          <div className="flex items-center gap-1">
-            <input
+          <div className="flex items-center gap-1.5">
+            <NumberStepper
               id="cycleLen"
-              type="number"
+              value={cycleLength}
               min={20}
               max={45}
-              value={cycleLength}
-              onChange={(e) => setSetting('cycleLength', Math.max(20, Math.min(45, Number(e.target.value))))}
-              className="w-16 text-center text-sm py-1 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
+              onChange={(v) => setSetting('cycleLength', v)}
             />
             <span className="text-xs text-muted">jours</span>
           </div>
@@ -70,15 +113,13 @@ export default function Settings() {
 
         <div className="flex items-center justify-between">
           <label htmlFor="periodLen" className="text-sm text-muted">Durée moyenne des règles</label>
-          <div className="flex items-center gap-1">
-            <input
+          <div className="flex items-center gap-1.5">
+            <NumberStepper
               id="periodLen"
-              type="number"
+              value={periodLength}
               min={1}
               max={10}
-              value={periodLength}
-              onChange={(e) => setSetting('periodLength', Math.max(1, Math.min(10, Number(e.target.value))))}
-              className="w-16 text-center text-sm py-1 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
+              onChange={(v) => setSetting('periodLength', v)}
             />
             <span className="text-xs text-muted">jours</span>
           </div>
