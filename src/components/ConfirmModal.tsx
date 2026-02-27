@@ -20,9 +20,9 @@ export default function ConfirmModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40" onClick={onCancel}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={onCancel}>
       <div
-        className="bg-surface rounded-xl shadow-xl max-w-sm w-full p-5 space-y-4"
+        className="animate-scale-in bg-surface rounded-xl shadow-2xl max-w-sm w-full p-5 space-y-4"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start gap-3">

@@ -40,8 +40,19 @@ export default function CycleRing({ currentDay, totalDays, phases, phase }: Prop
   const currentColor = PHASE_COLORS[phase]?.ring ?? PHASE_COLORS.unknown.ring;
 
   return (
-    <div className="relative" style={{ width: SIZE, height: SIZE }}>
+    <div className="relative animate-fade-in-up" style={{ width: SIZE, height: SIZE }}>
       <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`} className="block">
+        <defs>
+          {/* Glow filter for the active phase arc */}
+          <filter id="arcGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
         {/* Background track */}
         <circle
           cx={CENTER}
@@ -57,6 +68,7 @@ export default function CycleRing({ currentDay, totalDays, phases, phase }: Prop
         {phases.map((p) => {
           const startA = dayToAngle(p.startDay, totalDays);
           const endA = dayToAngle(p.endDay + 1, totalDays);
+          const isActive = phase === p.phase;
           return (
             <path
               key={p.phase}
@@ -65,7 +77,8 @@ export default function CycleRing({ currentDay, totalDays, phases, phase }: Prop
               stroke={PHASE_COLORS[p.phase]?.ring ?? '#999'}
               strokeWidth={STROKE}
               strokeLinecap="butt"
-              opacity={phase === p.phase ? 1 : 0.35}
+              opacity={isActive ? 1 : 0.3}
+              filter={isActive ? 'url(#arcGlow)' : undefined}
             />
           );
         })}
@@ -78,7 +91,7 @@ export default function CycleRing({ currentDay, totalDays, phases, phase }: Prop
               cy={markerPos.y}
               r={STROKE / 2 + 4}
               fill={currentColor}
-              className="drop-shadow"
+              className="drop-shadow-lg"
             />
             <circle
               cx={markerPos.x}

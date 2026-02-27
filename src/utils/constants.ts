@@ -34,11 +34,11 @@ export const PHASE_LABELS: Record<string, string> = {
 };
 
 export const PHASE_COLORS: Record<string, { ring: string; bg: string; text: string }> = {
-  period:      { ring: '#B25050', bg: 'bg-accent/15',    text: 'text-accent' },
-  follicular:  { ring: '#5B8DBE', bg: 'bg-secondary/10', text: 'text-secondary' },
-  ovulation:   { ring: '#7CB87C', bg: 'bg-green-500/12', text: 'text-green-600 dark:text-green-400' },
-  luteal:      { ring: '#C4A35A', bg: 'bg-amber-500/12', text: 'text-amber-600 dark:text-amber-400' },
-  unknown:     { ring: '#9E9E9E', bg: 'bg-surface-alt',  text: 'text-muted' },
+  period:      { ring: '#A35F73', bg: 'bg-flow/12',       text: 'text-flow' },
+  follicular:  { ring: '#7EA7FF', bg: 'bg-secondary/10',  text: 'text-secondary' },
+  ovulation:   { ring: '#7BCF9A', bg: 'bg-ovulation/12',  text: 'text-ovulation' },
+  luteal:      { ring: '#D6A35D', bg: 'bg-luteal/12',     text: 'text-luteal' },
+  unknown:     { ring: '#8A8AAE', bg: 'bg-surface-alt',   text: 'text-muted' },
 };
 
 export const APP_VERSION = '1.0.0';

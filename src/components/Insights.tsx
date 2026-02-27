@@ -20,7 +20,7 @@ interface Insight {
   icon: React.ReactNode;
   title: string;
   message: string;
-  color: string; // Tailwind bg class
+  color: string;
 }
 
 export default function Insights({ stats }: Props) {
@@ -30,10 +30,11 @@ export default function Insights({ stats }: Props) {
 
   return (
     <div className="space-y-2">
-      {insights.map((ins) => (
+      {insights.map((ins, i) => (
         <div
           key={ins.key}
-          className={`flex items-start gap-3 rounded-xl p-3.5 ${ins.color}`}
+          className={`flex items-start gap-3 rounded-xl p-3.5 animate-fade-in-up ${ins.color}`}
+          style={{ animationDelay: `${i * 0.06}s` }}
         >
           <span className="mt-0.5 shrink-0">{ins.icon}</span>
           <div className="min-w-0">
@@ -64,15 +65,15 @@ function buildInsights(stats: CycleStats): Insight[] {
   if (stats.phase === 'period') {
     items.push({
       key: 'period-now',
-      icon: <Droplets size={18} className="text-accent" />,
+      icon: <Droplets size={18} className="text-flow" />,
       title: 'Vous êtes en période de règles',
       message: `Jour ${stats.currentDay} de vos règles. Prenez soin de vous.`,
-      color: 'bg-accent/8',
+      color: 'bg-flow/10',
     });
   } else if (daysUntilPeriod >= 0 && daysUntilPeriod <= 3) {
     items.push({
       key: 'period-soon',
-      icon: <Droplets size={18} className="text-accent" />,
+      icon: <Droplets size={18} className="text-flow" />,
       title:
         daysUntilPeriod === 0
           ? 'Vos règles sont prévues aujourd\'hui'
@@ -80,16 +81,16 @@ function buildInsights(stats: CycleStats): Insight[] {
             ? 'Vos règles arrivent demain'
             : `Vos règles arrivent dans ${daysUntilPeriod} jours`,
       message: `Prochaines règles estimées le ${format(parseISO(stats.nextPeriodDate), 'd MMMM', { locale: fr })}.`,
-      color: 'bg-accent/8',
+      color: 'bg-flow/10',
     });
   } else if (daysUntilPeriod < 0 && daysUntilPeriod >= -7) {
     items.push({
       key: 'period-late',
-      icon: <AlertCircle size={18} className="text-amber-500" />,
+      icon: <AlertCircle size={18} className="text-luteal" />,
       title: `Vos règles ont ${Math.abs(daysUntilPeriod)} jour${Math.abs(daysUntilPeriod) > 1 ? 's' : ''} de retard`,
       message:
         'Ceci est une estimation. Les cycles peuvent varier naturellement.',
-      color: 'bg-amber-500/8',
+      color: 'bg-luteal/10',
     });
   }
 
@@ -97,21 +98,21 @@ function buildInsights(stats: CycleStats): Insight[] {
   if (stats.phase === 'ovulation') {
     items.push({
       key: 'ovulation-now',
-      icon: <Egg size={18} className="text-green-500" />,
+      icon: <Egg size={18} className="text-ovulation" />,
       title: 'Période d\'ovulation estimée',
       message: 'Vous êtes dans votre fenêtre de fertilité estimée.',
-      color: 'bg-green-500/8',
+      color: 'bg-ovulation/10',
     });
   } else if (daysUntilOvulation > 0 && daysUntilOvulation <= 3) {
     items.push({
       key: 'ovulation-soon',
-      icon: <Egg size={18} className="text-green-500" />,
+      icon: <Egg size={18} className="text-ovulation" />,
       title:
         daysUntilOvulation === 1
           ? 'Ovulation estimée demain'
           : `Ovulation estimée dans ${daysUntilOvulation} jours`,
       message: `L'ovulation est estimée vers le jour ${ovulationDay} de votre cycle.`,
-      color: 'bg-green-500/8',
+      color: 'bg-ovulation/10',
     });
   }
 
@@ -119,11 +120,11 @@ function buildInsights(stats: CycleStats): Insight[] {
   if (stats.phase === 'luteal' && daysUntilPeriod > 3 && daysUntilPeriod <= 10) {
     items.push({
       key: 'luteal-info',
-      icon: <Moon size={18} className="text-amber-500" />,
+      icon: <Moon size={18} className="text-luteal" />,
       title: 'Phase lutéale',
       message:
         'Votre corps se prépare pour le prochain cycle. Symptômes prémenstruels possibles.',
-      color: 'bg-amber-500/8',
+      color: 'bg-luteal/10',
     });
   }
 
@@ -135,7 +136,7 @@ function buildInsights(stats: CycleStats): Insight[] {
       title: 'Phase folliculaire',
       message:
         'Votre corps se prépare à l\'ovulation. L\'énergie remonte généralement.',
-      color: 'bg-secondary/8',
+      color: 'bg-secondary/10',
     });
   }
 
@@ -149,18 +150,18 @@ function buildInsights(stats: CycleStats): Insight[] {
     if (variation <= 3) {
       items.push({
         key: 'regularity',
-        icon: <TrendingUp size={18} className="text-green-600" />,
+        icon: <TrendingUp size={18} className="text-ovulation" />,
         title: 'Cycles réguliers',
         message: `Vos derniers cycles varient de ${min} à ${max} jours. Très régulier !`,
-        color: 'bg-green-500/8',
+        color: 'bg-ovulation/8',
       });
     } else if (variation >= 8) {
       items.push({
         key: 'irregularity',
-        icon: <TrendingUp size={18} className="text-amber-500" />,
+        icon: <TrendingUp size={18} className="text-luteal" />,
         title: 'Cycles irréguliers',
         message: `Vos derniers cycles varient de ${min} à ${max} jours (écart de ${variation} jours).`,
-        color: 'bg-amber-500/8',
+        color: 'bg-luteal/8',
       });
     }
   }

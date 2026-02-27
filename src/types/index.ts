@@ -46,4 +46,4 @@ export interface CycleStats {
 
 export type ThemeMode = 'system' | 'light' | 'dark';
 
-export type TabId = 'dashboard' | 'calendar' | 'stats' | 'settings';
+export type TabId = 'dashboard' | 'calendar' | 'stats' | 'settings' | 'about';

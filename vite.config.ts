@@ -9,12 +9,12 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icons/*.png'],
+      includeAssets: ['icons/*.png', 'img/*.png'],
       manifest: {
         name: 'LunaMia — Suivi de cycle',
         short_name: 'LunaMia',
         description: 'Application de suivi de cycle menstruel, locale et confidentielle.',
-        theme_color: '#1B3A5C',
+        theme_color: '#14162B',
         background_color: '#FAFAFA',
         display: 'standalone',
         orientation: 'portrait',
@@ -27,6 +27,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,png,svg,woff2}'],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
       },
     }),
   ],

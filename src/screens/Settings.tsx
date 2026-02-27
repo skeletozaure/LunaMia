@@ -46,11 +46,11 @@ export default function Settings() {
 
   return (
     <div className="p-4 space-y-6">
-      <h1 className="text-lg font-semibold text-foreground">Paramètres</h1>
+      <h1 className="text-xl font-bold text-foreground animate-fade-in-up">Paramètres</h1>
 
       {/* Cycle settings */}
-      <section className="bg-surface rounded-xl p-4 shadow-sm border border-border space-y-4">
-        <h2 className="text-sm font-medium text-foreground">Cycle</h2>
+      <section className="animate-fade-in-up delay-1 bg-surface rounded-2xl p-4 shadow-sm border border-border space-y-4">
+        <h2 className="text-sm font-semibold text-foreground">Cycle</h2>
 
         <div className="flex items-center justify-between">
           <label htmlFor="cycleLen" className="text-sm text-muted">Durée moyenne du cycle</label>
@@ -86,8 +86,8 @@ export default function Settings() {
       </section>
 
       {/* Theme */}
-      <section className="bg-surface rounded-xl p-4 shadow-sm border border-border space-y-3">
-        <h2 className="text-sm font-medium text-foreground">Apparence</h2>
+      <section className="animate-fade-in-up delay-2 bg-surface rounded-2xl p-4 shadow-sm border border-border space-y-3">
+        <h2 className="text-sm font-semibold text-foreground">Apparence</h2>
         <div className="flex gap-2">
           {themeOptions.map((opt) => (
             <button
@@ -106,8 +106,8 @@ export default function Settings() {
       </section>
 
       {/* Data management */}
-      <section className="bg-surface rounded-xl p-4 shadow-sm border border-border space-y-3">
-        <h2 className="text-sm font-medium text-foreground">Données</h2>
+      <section className="animate-fade-in-up delay-3 bg-surface rounded-2xl p-4 shadow-sm border border-border space-y-3">
+        <h2 className="text-sm font-semibold text-foreground">Données</h2>
 
         <button
           onClick={handleExport}
